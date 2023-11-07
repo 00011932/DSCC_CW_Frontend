@@ -7,4 +7,4 @@ hooks:
     BeforeInstall:
       - location: \deploy-scripts\before-install.sh
         timeout: 150
-        runas: Adminstrator
+        runas: Administrator
