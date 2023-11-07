@@ -2,6 +2,7 @@
 
 namespace Frontend_MVC.Models
 {
+    // Transaction View Model class to work with Transaction object
     public class Transaction
     {
         public int ID { get; set; }

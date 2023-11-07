@@ -2,6 +2,7 @@
 
 namespace Frontend_MVC.Models
 {
+    // Item View Model class to work with Item object
     public class Item
     {
         public int ID { get; set; }

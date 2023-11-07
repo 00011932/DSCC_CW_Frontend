@@ -10,24 +10,25 @@ namespace Frontend_MVC.Controllers
     public class TransactionController : Controller
     {
 
-        private readonly string BaseUrl = "http://ec2-3-91-153-6.compute-1.amazonaws.com/";
+        private readonly string BaseUrl = "http://ec2-3-91-153-6.compute-1.amazonaws.com/"; // set Base API Url 
         // GET: TransactionController
         public async Task<ActionResult> Index()
         {
+            // sends a get request to the API to get list of Transactions 
             List<Transaction> transactionList = new List<Transaction>();
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(BaseUrl);
+                client.BaseAddress = new Uri(BaseUrl); // set base url
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync("api/Transaction");
+                HttpResponseMessage response = await client.GetAsync("api/Transaction");  // request to the api
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var itemResponse = response.Content.ReadAsStringAsync().Result;
-                    transactionList = JsonConvert.DeserializeObject<List<Transaction>>(itemResponse);
+                    var itemResponse = response.Content.ReadAsStringAsync().Result; // getting Result from response
+                    transactionList = JsonConvert.DeserializeObject<List<Transaction>>(itemResponse);  // Deserializing the result
                 }
 
                 return View(transactionList);
@@ -42,16 +43,16 @@ namespace Frontend_MVC.Controllers
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(BaseUrl);
+                client.BaseAddress = new Uri(BaseUrl); // set base url
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync($"api/Transaction/{id}");
+                HttpResponseMessage response = await client.GetAsync($"api/Transaction/{id}"); // send get request with specified id
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var itemResponse = response.Content.ReadAsStringAsync().Result;
-                    trn = JsonConvert.DeserializeObject<Transaction>(itemResponse);
+                    var itemResponse = response.Content.ReadAsStringAsync().Result; // get the result from response 
+                    trn = JsonConvert.DeserializeObject<Transaction>(itemResponse); // deserialize the result
                 }
 
                 return View(trn);
@@ -77,7 +78,8 @@ namespace Frontend_MVC.Controllers
                 client.BaseAddress = new Uri(BaseUrl);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
+                
+                //send post request to create new item
                 HttpResponseMessage response = await client.PostAsJsonAsync("api/Transaction", trn);
 
                 if (response.IsSuccessStatusCode)
@@ -105,6 +107,7 @@ namespace Frontend_MVC.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                // send request to get specified transaction by id to edit
                 HttpResponseMessage response = await client.GetAsync($"api/Transaction/{id}");
 
                 if (response.IsSuccessStatusCode)
@@ -127,6 +130,8 @@ namespace Frontend_MVC.Controllers
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+
+                // send request to edit existing item in the db
                 HttpResponseMessage response = await client.PutAsJsonAsync($"api/Transaction/{id}", trn);
 
                 if (response.IsSuccessStatusCode)
