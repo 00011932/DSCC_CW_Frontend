@@ -5,6 +5,6 @@ files:
     destination: c:\inetpub\wwwroot
 hooks:
     BeforeInstall:
-      - location: deploy-scripts\before-install.sh
+      - location: \deploy-scripts\before-install.bat
         timeout: 150
         runas: Administrator
